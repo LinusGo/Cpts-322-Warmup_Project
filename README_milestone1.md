@@ -57,9 +57,9 @@ In part 1, we will focus on the basic features of the app : displaying "smile" p
 To help you start we have provided some boilerplate files that you will have to modify to implement the project.
 
 
-1. Clone the repository [smile_322_skeleton repository](https://gitlab.eecs.wsu.edu/322-fall20-arslanay-warmup/smile_322_skeleton) on the working machine
+1. Clone the repository [smile_322_skeleton repository](https://gitlab.eecs.wsu.edu/322-fall20-examplecode/smile_322_skeleton) on the working machine
     ```
-    git clone https://gitlab.eecs.wsu.edu/322-fall20-arslanay-warmup/smile_322_skeleton.git
+    git clone https://gitlab.eecs.wsu.edu/322-fall20-examplecode/smile_322_skeleton.git
     ```
     **You'll be prompted to enter your username and password** (those you used to login gitlab.eecs.wsu.edu). If succeeded, you'll see a new directory show up.
   
@@ -81,8 +81,8 @@ To help you start we have provided some boilerplate files that you will have to 
     This will display all remote repositories. Currently, it should show the following:
     ```
     git remote -v
-    origin  https://gitlab.eecs.wsu.edu/322-fall20-arslanay-warmup/smile_322_skeleton.git (fetch)
-    origin  https://gitlab.eecs.wsu.edu/322-fall20-arslanay-warmup/smile_322_skeleton.git (push)
+    origin  https://gitlab.eecs.wsu.edu/322-fall20-examplecode/smile_322_skeleton.git (fetch)
+    origin  https://gitlab.eecs.wsu.edu/322-fall20-examplecode/smile_322_skeleton.git (push)
 
     ```
     We will create a **private** repository for each of you on EECS GitLab server and you will commit everything to this repository. The name of this repository is `<yourlastname>-warmup`. (Make sure that this repository shows up in your GitLab account.) 
