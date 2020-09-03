@@ -257,12 +257,12 @@ Other form input fields for the title and happiness level inputs are already pro
 
 2. In `create.html`, edit the HTML template for smile post page and add the form items for smile message "body" and "happiness level". When the field validators for post "body" and "title" fail, an error message should be displayed. Make sure to display field validation error messages for title and body if the user enters invalid input. 
 
-3. In `routes.py` add a new view function that renders the smile post form.  
+3. In `routes.py` add a new route for creating smile posts.   
 
     * URL : `/postsmile`
     * Methods: 'GET' and 'POST'
 
-    The view function should implement the following:
+    The route decorator function should implement the following:
 
     - It should create an instance of `postForm` and pass it to the `create.html` template for rendering. 
     - When the form is submitted, it should create a new `Post` item based on the form input and insert it to the database. 
