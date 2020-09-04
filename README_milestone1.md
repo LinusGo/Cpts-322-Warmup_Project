@@ -344,7 +344,7 @@ For this task you will edit `/app/static/css/main.css` in addition to the HTML t
     * Increment the post's like count by 1.
     * Write the updated post back to the database
     * Since the current page is the main page (i.e., `/index`), you don't need to redirect to a different page. 
-    * Retrieve all the posts from the database and render `index.html` with the update form. 
+    * Retrieve all the posts from the database and render `index.html` with the updated form. 
 
 2. Now, in `_post.html`, assign the `href` attribute of like link ( i.e., `like.png`) to the like route URL `like`. See the class exercise for examples on how to pass the route variable to `url_for'. 
 
