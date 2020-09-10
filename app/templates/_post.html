@@ -1,41 +1,55 @@
-<table class = "posttable" style = "width:100%" valign="top">
-        <tr> 
-            <td colspan="3"><div class="posttitle"> {{post.title}} </div>
-            </td>
-        </tr>
-        <tr>
-            <td width="10%" >
-                <!--  (milestone1) TODO: include happiness-level image -->            
-            </td>
+<table class="posttable" style="width:100%" valign="top">
+    <tr>
+        <td colspan="3">
+            <div class="posttitle"> {{ post.title }} </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="10%">
+            <!--  (milestone1) TODO: include happiness-level image -->
+            {% if post.happiness_level == 1 %}
+                <a href="" width="40"><img src="{{ url_for('static', filename = 'happiness-level-1.png' ) }}"
+                                           width="50"> </a>
+            {% elif post.happiness_level == 2 %}
+                <a href="" width="40"><img src="{{ url_for('static', filename = 'happiness-level-2.png' ) }}"
+                                           width="50"> </a>
+            {% else %}
+                <a href="" width="40"><img src="{{ url_for('static', filename = 'happiness-level-3.png' ) }}"
+                                           width="50"> </a>
+            {% endif %}
+        </td>
 
-            <td width="80%" >
-                <!--  (milestone 1) TODO: include post body -->                            
-                <br>
-                Posted at: {{ post.timestamp }}
-            </td> 
+        <td width="80%" class="postmessage">
+            <!--  (milestone 1) TODO: include post body -->
+            <br>
+            <div class="postmessage"> {{ post.title }} </div>
+            <br>
+            Posted at: {{ post.timestamp }}
+        </td>
 
-            <td width = "5%">
-                <!-- (milestone1)  TODO: add the link for "like" link-->                            
-                <a href="" width = "35" ><img src="{{ url_for('static', filename = 'like.png' )}}"  width="50" > </a>
-                <br>
-                <!-- (milestone1) TODO: include the like count-->
-                <br> 
-                 <!-- (milestone3) TODO: if the post is posted by the logged in user, include the delete link. --> 
-            </td>
-        </tr>
-        
-        <tr> 
-            <td colspan="3" style = "text-align:center" valign="bottom">  
-                <br>
-                <!-- (milestone2) TODO: include all the tags associated with the post-->
-            </td>
-        </tr>
+        <td width="5%" class="likecount" >
+            <!-- (milestone1)  TODO: add the link for "like" link-->
+            <a href="{{ url_for('like',post_id=post.id)}}" width="35"><img src="{{ url_for('static', filename = 'like.png' ) }}" width="50"> </a>
+            <br>
+            <!-- (milestone1) TODO: include the like count-->
+            <div> {{ post.likes }} </div>
+            <br>
+            <!-- (milestone3) TODO: if the post is posted by the logged in user, include the delete link. -->
+        </td>
+    </tr>
 
-        <tr>
-            <td colspan="3" style = "text-align:center" valign="bottom">  
-                <br>
-                  <!-- (milestone3) TODO: include username who posted the post-->
-              </td>
-            </tr>
-        </tr>
-    </table>
+    <tr>
+        <td colspan="3" style="text-align:center" valign="bottom">
+            <br>
+            <!-- (milestone2) TODO: include all the tags associated with the post-->
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3" style="text-align:center" valign="bottom">
+            <br>
+            <!-- (milestone3) TODO: include username who posted the post-->
+        </td>
+    </tr>
+    </tr>
+</table>
