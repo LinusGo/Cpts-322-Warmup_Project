@@ -3,14 +3,22 @@
 {% block content %}
 
     <h1>Welcome to Smile Portal!</h1>
-    <h2>Number of smiles: {{smilecount}} </h2>
-
+    <h2>Number of smiles: {{likes}} </h2>
+    <form action="" method="POST">
+        <h3>{{ sortform.sort }}{{ sortform.refresh(class="button") }}</h3>
+    </form>
     <!--     TODO: (milestone1) Include the form for creating a new post here.. -->
 
 
     <!--     TODO: (milestone1) Format posts -->
-    {% for post in posts %}
-        {% include '_post.html' %} 
-    {% endfor %}
+    <div class="postlist">
+        {% for post in posts %}
+            <div class="post-box">
+                {% include '_post.html' %}
+            </div>
+        {% endfor %}
+    </div>
+
+
     
 {% endblock %}

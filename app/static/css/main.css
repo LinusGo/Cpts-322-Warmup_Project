@@ -76,3 +76,50 @@ a:hover {
     border: 2px solid lightseagreen;
 }
 
+.postlist{
+    display : flex;
+    flex-wrap : wrap;
+}
+
+@media screen and (min-width: 800px) and (max-width:1200px){
+    .post-box{
+        display: flex;
+        vertical-align: middle;
+        background: lavender;
+        width: 48%;
+        margin: 5px;
+    }
+}
+
+@media screen and (min-width: 1200px){
+    .post-box{
+        display: flex;
+        vertical-align: middle;
+        background: lavender;
+        width: 32%;
+        margin: 5px;
+    }
+}
+
+@media screen and (max-width:800px){
+    .post-box{
+        display: flex;
+        vertical-align: middle;
+        background: lavender;
+        width: 99%;
+        margin: 5px;
+    }
+}
+.tagitem{
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+    border-style: ridge;
+    border-width:5px;
+    border-color: bisque;
+    background: 1px;
+}
+
+.formselect{
+    background: bisque;
+}
