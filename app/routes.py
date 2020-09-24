@@ -35,13 +35,16 @@ def initDB(*args, **kwargs):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     sortform = SortForm()
-    if request.method == 'POST':
-        selected = dict(sortform.sort.choices).get(int(sortform.sort.data))
-        posts = Post.query.order_by(Post.title.desc())
-        return render_template('index.html', posts=posts.all(), sortform=sortform)
-    posts = Post.query.order_by(Post.timestamp.desc())
+    selected = dict(sortform.sort.choices).get(int(request.args.get('sort', 0)))
 
-    return render_template('index.html', title="Smile Portal", posts=posts.all(), sortform=sortform)
+    values = {
+        'Happiness level': 'happiness_level',
+        '# of likes': 'likes',
+        'Title': 'title',
+        'Date': 'timestamp'
+    }
+    posts = Post.query.order_by(getattr(Post, values.get(selected, 'title')).desc())
+    return render_template('index.html', posts=posts.all(), sortform=sortform)
 
 
 @app.route('/postsmile', methods=['GET', 'POST'])
