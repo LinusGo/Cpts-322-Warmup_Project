@@ -6,13 +6,13 @@ body {
 
 }
 
-.likecount{
+.likecount {
     text-align: center;
     font-weight: bold;
 }
 
-.flash-container{
-    background:#f6f6f6;
+.flash-container {
+    background: #f6f6f6;
     font-family: Tahoma;
     font-size: 12px;
     height: 32px;
@@ -20,32 +20,44 @@ body {
 }
 
 .nav-container {
-    background:#f6f6f6;
+    background: #f6f6f6;
     font-family: Tahoma;
     font-size: 12px;
     height: 32px;
     text-transform: uppercase;
 }
+
 a:hover {
-	color:#2387D9;
+    color: #2387D9;
 }
 
 .button {
-    width : 65px;
-    padding : 3px;    
+    width: 70px;
     font-size: 16px;
-    margin : 5px;
-    padding : 5px;
+    margin: 7px;
+    padding: 7px;
     border: 1px solid lightgray;
+    text-align: center;
+
 }
+
 .button:hover {
-    background-color: 157dd3;
+    background-color: 157 dd3;
     color: white;
 }
 
-.posttable { 
-    width : 100%;
+.posttable {
+    width: 100%;
     margin: 0px;
+}
+
+.textinput {
+    margin: 5px;
+    width: 30%;
+    height: 90%;
+    font-style: italic;
+    font-size: 16px;
+    border: 2px solid lightseagreen;
 }
 
 .posttitle {
@@ -54,35 +66,36 @@ a:hover {
 
 }
 
-.postmessage{
-    margin : 5px;
+.postmessage {
+    margin: 5px;
     font-style: normal;
 }
 
-.formtitle{
-    width : 30%;
+.formtitle {
+    width: 30%;
     height: 120%;
     font-style: italic;
     font-size: 16px;
-    margin : 5px;
+    margin: 5px;
     border: 2px solid lightseagreen;
 }
-.formbody{
-    width : 60%;
+
+.formbody {
+    width: 60%;
     height: 300%;
     font-size: 16px;
     font-style: italic;
-    margin : 5px;
+    margin: 5px;
     border: 2px solid lightseagreen;
 }
 
-.postlist{
-    display : flex;
-    flex-wrap : wrap;
+.postlist {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-@media screen and (min-width: 800px) and (max-width:1200px){
-    .post-box{
+@media screen and (min-width: 800px) and (max-width: 1200px) {
+    .post-box {
         display: flex;
         vertical-align: middle;
         background: lavender;
@@ -91,8 +104,8 @@ a:hover {
     }
 }
 
-@media screen and (min-width: 1200px){
-    .post-box{
+@media screen and (min-width: 1200px) {
+    .post-box {
         display: flex;
         vertical-align: middle;
         background: lavender;
@@ -101,8 +114,8 @@ a:hover {
     }
 }
 
-@media screen and (max-width:800px){
-    .post-box{
+@media screen and (max-width: 800px) {
+    .post-box {
         display: flex;
         vertical-align: middle;
         background: lavender;
@@ -110,16 +123,17 @@ a:hover {
         margin: 5px;
     }
 }
-.tagitem{
+
+.tagitem {
     text-align: center;
     margin: 5px;
     padding: 5px;
     border-style: ridge;
-    border-width:5px;
+    border-width: 5px;
     border-color: bisque;
     background: 1px;
 }
 
-.formselect{
+.formselect {
     background: bisque;
 }

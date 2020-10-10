@@ -3,4 +3,40 @@
 {% block content %}
     <h1>Register</h1>
     <!-- TODO: (milestone 3) Include the "user registration" form here..  -->
+    {% if form %}
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(class = 'textinput') }}<br>
+                {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.email.label }}<br>
+                {{ form.email(class = "textinput") }}<br>
+                {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(class = "textinput") }}<br>
+                {% for error in form.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.passwordR.label }}<br>
+                {{ form.passwordR(class = "textinput") }}<br>
+                {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+
+            <p>{{ form.submit(class="button") }}</p>
+        </form>
+
+    {% endif %}
 {% endblock %}

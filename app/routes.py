@@ -1,4 +1,7 @@
 from __future__ import print_function
+from flask_login import current_user, login_user, logout_user, login_required
+from app.forms import LoginForm
+
 import sys
 from datetime import datetime
 from pprint import pprint
@@ -8,8 +11,8 @@ from flask_sqlalchemy import sqlalchemy
 from sqlalchemy import desc
 
 from app import app, db
-
-from app.forms import PostForm, SortForm
+from app.models import User
+from app.forms import PostForm, SortForm, RegistrationForm
 from app.models import Post
 from app.models import Tag
 from app.models import postTags
@@ -18,12 +21,6 @@ from app.models import postTags
 @app.before_first_request
 def initDB(*args, **kwargs):
     db.create_all()
-    # p = Post(title="Smile test post - 1",
-    #          body="First smile post.Maximum 1500 characters. Don't forget to smile today!",
-    #          likes=5)
-    # db.session.add(p)
-    # db.session.commit()
-    # print(str(Post.query.limit(1).all()[0]))
     if Tag.query.count() == 0:
         tags = ['funny', 'inspiring', 'true-story', 'heartwarming', 'friendship']
         for t in tags:
@@ -33,6 +30,7 @@ def initDB(*args, **kwargs):
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
+@login_required
 def index():
     sortform = SortForm()
     selected = dict(sortform.sort.choices).get(int(request.args.get('sort', 0)))
@@ -44,18 +42,26 @@ def index():
         'Date': 'timestamp'
     }
     posts = Post.query.order_by(getattr(Post, values.get(selected, 'title')).desc())
-    return render_template('index.html', posts=posts.all(), sortform=sortform)
+    return render_template('index.html', posts=posts.all(), title="Smile Portal", sortform=sortform)
 
 
 @app.route('/postsmile', methods=['GET', 'POST'])
+@login_required
 def postSmile():
     form = PostForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            post = Post(title=request.form['title'],
-                        body=request.form['body'],
-                        happiness_level=int(request.form['happiness_level'])
+            # post = Post(title=request.form['title'],
+            #             body=request.form['body'],
+            #             happiness_level=int(request.form['happiness_level'])
+            #             # user_id=request.form['user.id']
+            #             )
+            post = Post(title=form.title.data,
+                        body=form.body.data,
+                        happiness_level=form.happiness_level.data
+                        # user_id=form.user_id.data.id
                         )
+
             for t in form.tag.data:
                 post.tags.append(t)
             db.session.add(post)
@@ -67,6 +73,7 @@ def postSmile():
 
 
 @app.route('/like/<post_id>', methods=['GET'])
+@login_required
 def like(post_id):
     pi = Post.query.get(post_id)
     pi.likes += 1
@@ -76,3 +83,46 @@ def like(post_id):
     pc = posts.count()
     # return redirect(url_for('index'))
     return render_template('index.html', title="Smile Portal", posts=posts.all(), smilecount=pc)
+
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.add(current_user)
+        db.session.commit()
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('index'))
+    return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.get_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Sign In', form=form)
+
+
+@login_required
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))

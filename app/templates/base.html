@@ -1,38 +1,42 @@
 <html>
-    <head>
-       {% if title %}
-          <title>{{ title }} - Smile </title>
-       {% else %}
-          <title> Welcome to Smile Portal! </title>
-       {% endif %}
-       <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    </head>
+<head>
+    {% if title %}
+        <title>{{ title }} - Smile </title>
+    {% else %}
+        <title> Welcome to Smile Portal! </title>
+    {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {{ moment.include_jquery() }}
+    {{ moment.include_moment() }}
 
-    <body>
-        <div class ="nav-container">
-        <table>
-            <tr>
-                <td><a href="{{ url_for('index') }}" class = "button">Smiles</a></td>
-                <!-- TODO: (milestone 1) add the URL for the "Post Smile". -->
-                <td><a href="{{ url_for('postSmile') }}" class = "button"> Post Smile </a></td>
-                <!-- TODO: (milestone 3) add the "Login" or "Logous" link. If the user is logged in, Login link should be displayed, otherwise Logout link should be displayed. -->
-                <td><a href="" class = "button"> Login </a></td>
-                <td><a href="" class = "button"> Logout </a></td>
-                <td> Current user is: <span class="useritem"> _______ <!-- TODO: (milestone 3) include the username of the logged-in user. -->  </span></td>
-            </tr>
-        </table>
-        </div>
-        <div class ="flash-container">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
+</head>
+
+<body>
+<div class="nav-container">
+    <table>
+        <tr>
+            <td><a href="{{ url_for('index') }}" class="button">Smiles</a></td>
+            <!-- TODO: (milestone 1) add the URL for the "Post Smile". -->
+            <td><a href="{{ url_for('postSmile') }}" class="button"> Post Smile </a></td>
+            <!-- TODO: (milestone 3) add the "Login" or "Logout" link. If the user is logged in, Login link should be displayed, otherwise Logout link should be displayed. -->
+            <td><a href="{{ url_for('login') }}" class="button"> Login </a></td>
+            <td><a href="{{ url_for('logout') }}" class="button"> Logout </a></td>
+            <td> Current user is: <span class="useritem"> {{ current_user.username }}
+                <!-- TODO: (milestone 3) include the username of the logged-in user. -->  </span></td>
+        </tr>
+    </table>
+</div>
+<div class="flash-container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
                 <div> {{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            {% endwith %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-            {% block content %} {% endblock %}
-        </div>
+    {% block content %} {% endblock %}
+</div>
 
-    </body>
+</body>
 </html>
