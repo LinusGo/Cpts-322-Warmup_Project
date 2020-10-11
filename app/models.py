@@ -20,7 +20,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150))
     body = db.Column(db.String(1500))
-    # user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     likes = db.Column(db.Integer, default=0)
     happiness_level = db.Column(db.Integer, default=3)
@@ -33,7 +33,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64))
     email = db.Column(db.String(120))
     password_hash = db.Column(db.String(128))
-    # posts = db.relationship('Post', backref='writer', lazy='dynamic')
+    posts = db.relationship('Post', backref='writer', lazy='dynamic')
 
     def __repr__(self):
         return '{}{}'.format(self.id, self.username)

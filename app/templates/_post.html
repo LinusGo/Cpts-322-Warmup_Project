@@ -24,17 +24,22 @@
             <br>
             <div class="postmessage"> {{ post.title }} </div>
             <br>
-            Posted at: {{ post.timestamp }}
+            Posted at: {{ moment(post.timestamp).format('LLL') }}
         </td>
 
-        <td width="5%" class="likecount" >
+        <td width="5%" class="likecount">
             <!-- (milestone1)  TODO: add the link for "like" link-->
-            <a href="{{ url_for('like',post_id=post.id)}}" width="35"><img src="{{ url_for('static', filename = 'like.png' ) }}" width="50"> </a>
+            <a href="{{ url_for('like',post_id=post.id) }}" width="35"><img
+                    src="{{ url_for('static', filename = 'like.png' ) }}" width="50"> </a>
             <br>
             <!-- (milestone1) TODO: include the like count-->
             <div> {{ post.likes }} </div>
             <br>
             <!-- (milestone3) TODO: if the post is posted by the logged in user, include the delete link. -->
+            <form action="" method="post">
+                <input type="submit" value="Delete">
+            </form>
+
         </td>
     </tr>
 
@@ -54,6 +59,7 @@
         <td colspan="3" style="text-align:center" valign="bottom">
             <br>
             <!-- (milestone3) TODO: include username who posted the post-->
+            <div> Posted by: {{ post.user_id }} </div>
         </td>
     </tr>
     </tr>

@@ -1,6 +1,8 @@
 from __future__ import print_function
 from flask_login import current_user, login_user, logout_user, login_required
-from app.forms import LoginForm
+from flask_wtf import form
+
+from app.forms import LoginForm, EmptyForm
 
 import sys
 from datetime import datetime
@@ -41,8 +43,13 @@ def index():
         'Title': 'title',
         'Date': 'timestamp'
     }
-    posts = Post.query.order_by(getattr(Post, values.get(selected, 'title')).desc())
-    return render_template('index.html', posts=posts.all(), title="Smile Portal", sortform=sortform)
+    if request.args.get('checkbox') == 'y':
+        posts = Post.query.filter(User.id == current_user.get_id()).order_by(
+            getattr(Post, values.get(selected, 'title')).desc())
+        return render_template('index.html', posts=posts.all(), title="Smile Portal", sortform=sortform)
+    else:
+        posts = Post.query.order_by(getattr(Post, values.get(selected, 'title')).desc())
+        return render_template('index.html', posts=posts.all(), title="Smile Portal", sortform=sortform)
 
 
 @app.route('/postsmile', methods=['GET', 'POST'])
@@ -51,15 +58,10 @@ def postSmile():
     form = PostForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            # post = Post(title=request.form['title'],
-            #             body=request.form['body'],
-            #             happiness_level=int(request.form['happiness_level'])
-            #             # user_id=request.form['user.id']
-            #             )
             post = Post(title=form.title.data,
                         body=form.body.data,
-                        happiness_level=form.happiness_level.data
-                        # user_id=form.user_id.data.id
+                        happiness_level=form.happiness_level.data,
+                        user_id=current_user.get_id()
                         )
 
             for t in form.tag.data:
@@ -82,7 +84,7 @@ def like(post_id):
     posts = Post.query.order_by(Post.timestamp.desc())
     pc = posts.count()
     # return redirect(url_for('index'))
-    return render_template('index.html', title="Smile Portal", posts=posts.all(), smilecount=pc)
+    return render_template('index.html', title="Smile Portal", posts=posts.all(), smilecount=pc, form=form)
 
 
 @app.before_request
@@ -126,3 +128,23 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/delete/<post_id>', methods=['POST', 'DELETE'])
+@login_required
+def delete(post_id):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        thepost = Post.query.filter_by(id=post_id).first()
+        if thepost is None:
+            flash('Post with id "{}" not found.'.format(post_id))
+            return redirect(url_for('index'))
+
+        for t in thepost.tags:
+            thepost.tags.remove(t)
+        current_user.delete(thepost)
+        db.session.delete(thepost)
+        db.session.commit()
+        return redirect(url_for('index'))
+    else:
+        return redirect(url_for('index'))
